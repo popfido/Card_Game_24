@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="camp7506.assignment1.cardgame24.MainScreenActivity" />
         </activity>
+        <activity
+            android:name=".PracticeModeActivity"
+            android:label="@string/title_activity_practice_mode"
+            android:parentActivityName=".startList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="camp7506.assignment1.cardgame24.startList" />
+        </activity>
     </application>
 
 </manifest>

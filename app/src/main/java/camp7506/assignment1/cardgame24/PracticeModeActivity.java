@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import camp7506.assignment1.cardgame24.R;
 
-public class startList extends Activity {
+public class PracticeModeActivity extends Activity {
+
+    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +21,14 @@ public class startList extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_start_list);
+        setContentView(R.layout.activity_practice_mode);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.start_list, menu);
+        getMenuInflater().inflate(R.menu.practice_mode, menu);
         return true;
     }
 
