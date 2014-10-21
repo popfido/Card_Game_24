@@ -1,9 +1,11 @@
 package camp7506.assignment1.cardgame24;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -41,4 +43,11 @@ public class startList extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onClick_practise(View view) {
+        // Do something in response to button click
+        Intent intent = new Intent(this,PracticeModeActivity.class);
+        startActivity(intent);
+    }
+
 }

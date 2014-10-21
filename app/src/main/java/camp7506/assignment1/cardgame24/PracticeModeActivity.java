@@ -6,11 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 
 
 public class PracticeModeActivity extends Activity {
 
-    
+    ImageButton btn_add = (ImageButton) findViewById(R.id.btn_add);
 
 
     @Override
