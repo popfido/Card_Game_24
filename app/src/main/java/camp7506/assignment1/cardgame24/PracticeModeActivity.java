@@ -66,4 +66,8 @@ public class PracticeModeActivity extends Activity {
     public void OnClick_clr(View view){
         general_io.setText(" ");
     }
+
+    public void OnClick_add(View view){
+
+    }
 }
