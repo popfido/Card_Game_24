@@ -10,20 +10,25 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.singularsys.jep.Jep;
+import com.singularsys.jep.JepException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import camp7506.assignment1.cardgame24.formularElem;
 
 
 public class PracticeModeActivity extends Activity implements View.OnClickListener{
 
-    ImageButton btn_add,btn_minus,btn_multiply,btn_divide,btn_equal,btn_rec,btn_clr,btn_left,btn_right,btn_pos1,btn_pos2,btn_pos3,btn_pos4;
+    ImageButton btn_add,btn_minus,btn_multiply,btn_divide,btn_equal,btn_rec,btn_clr,btn_left,btn_right;
     TextView general_io;
-    ArrayList<formularElem> formula;
+    ArrayList<formularElem> formula = new ArrayList<formularElem>();
     int[] srcId;
     card[] card_desk;
     int mode;
+    status clickAble = new status();
+    ArrayList<status> statusArray = new ArrayList<status>();
+    int bracketCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
         btn_rec.setOnClickListener(this);
         btn_left.setOnClickListener(this);
         btn_right.setOnClickListener(this);
+        btn_equal.setOnClickListener(this);
 
         for(int i=0;i<4;i++)
             card_desk[i].object.setOnClickListener(this);
@@ -90,36 +96,138 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_add:
-                general_io.append("+");
-            break;
+                if(clickAble.operate) {
+                    general_io.append("+");
+                    formularElem temp = new formularElem("+", 1);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_minus:
-                general_io.append("-");
-            break;
+                if(clickAble.operate) {
+                    general_io.append("-");
+                    formularElem temp = new formularElem("-",1);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_multiply:
-                general_io.append("*");
-            break;
+                if(clickAble.operate) {
+                    general_io.append("*");
+                    formularElem temp = new formularElem("*",1);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_divide:
-                general_io.append("/");
-            break;
+                if(clickAble.operate) {
+                    general_io.append("/");
+                    formularElem temp = new formularElem("/",1);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_left:
-                general_io.append("(");
-            break;
+                if(clickAble.left) {
+                    general_io.append("(");
+                    formularElem temp = new formularElem("(",2);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_right:
-                general_io.append(")");
+                if(clickAble.right && bracketCounter > 0) {
+                    general_io.append(")");
+                    formularElem temp = new formularElem(")",3);
+                    formula.add(temp);
+                    setOnClick(temp);
+                }
+                break;
             case R.id.btn_clr:
-                general_io.setText(" ");
+                    formula.clear();
+                    general_io.setText(" ");
+                    clickAble = new status();
+                    statusArray.clear();
+                    for(int i=0;i<4;i++)
+                        card_desk[i].clicked = false;
             break;
-            case R.id.pos1:
+            case R.id.btn_rec:
+                if (!formula.isEmpty()){
+                    if(formula.get(formula.size()-1).type == 0){
+                        card temp = (card)formula.get(formula.size()-1);
+                        temp.clicked = false;
+                    }
+                    String old = general_io.getText().toString();
+                    general_io.setText(old.substring(0,old.length()-formula.get(formula.size()-1).content.length()));
+                    formula.remove(formula.size() - 1);
+                    clickAble = statusArray.get(statusArray.size()-1);
+                    statusArray.remove(statusArray.size()-1);
+                }
+            break;
+            case R.id.btn_equal:
+                if (clickAble.equal && bracketCounter == 0) {
+                    Jep jep = new Jep();
+                    try {
+                        jep.parse(general_io.getText().toString());
+                        String res = jep.evaluate().toString();
+                        general_io.setText(" " + res);
+                    } catch (JepException e) {
+                        System.out.println("An error occurred: " + e.getMessage());
+                    }
+                }
+            break;
+            default:
                 if (mode == 0)
                     beginGame();
+                else {
+                    if (clickAble.number)
+                        switch (v.getId()) {
+                            case R.id.pos1:
+                                if (!card_desk[0].clicked) {
+                                    formula.add(card_desk[0]);
+                                    general_io.append(card_desk[0].content);
+                                    card_desk[0].clicked = true;
+                                    setOnClick();
+                                }
+                                break;
+                            case R.id.pos2:
+                                if (!card_desk[1].clicked) {
+                                    formula.add(card_desk[1]);
+                                    general_io.append(card_desk[1].content);
+                                    card_desk[1].clicked = true;
+                                    setOnClick();
+                                }
+                                break;
+                            case R.id.pos3:
+                                if (!card_desk[2].clicked) {
+                                    formula.add(card_desk[2]);
+                                    general_io.append(card_desk[2].content);
+                                    card_desk[2].clicked = true;
+                                    setOnClick();
+                                }
+                                break;
+                            case R.id.pos4:
+                                if (!card_desk[3].clicked) {
+                                    formula.add(card_desk[3]);
+                                    general_io.append(card_desk[3].content);
+                                    card_desk[3].clicked = true;
+                                    setOnClick();
+                                }
+                                break;
+                        }
+                }
             break;
         }
     }
 
     public void reset(){
-
+        formula.clear();
+        general_io.setText(" ");
+        statusArray.clear();
+        clickAble = new status();
+        mode = 0;
     }
 
     public void beginGame(){
@@ -129,5 +237,30 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
             card_desk[i].object.setImageResource(srcId[i]);
         }
         mode = 1;
+    }
+
+    public void setOnClick(formularElem elem){
+        statusArray.add(clickAble);
+        switch (elem.type) {
+            case 0:
+                clickAble = new status(false, true, false, true, true);
+            break;
+            case 1:
+                clickAble = new status(true, false, true, false, false);
+            break;
+            case 2:
+                clickAble = new status(true, false, true, false, false);
+                bracketCounter++;
+            break;
+            case 3:
+                clickAble = new status(false, true, false, true, true);
+                bracketCounter--;
+            break;
+        }
+    }
+
+    public void  setOnClick(){
+        statusArray.add(clickAble);
+        clickAble = new status(false, true, false, true, true);
     }
 }

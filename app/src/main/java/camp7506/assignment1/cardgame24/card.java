@@ -9,6 +9,7 @@ import java.util.Random;
 public class card extends formularElem{
     public ImageButton object;
     public String src_id;
+    public boolean clicked;
 
     card(ImageButton btn){
         super("",0);
@@ -22,6 +23,7 @@ public class card extends formularElem{
         else
             content = Integer.toString(13);
         src_id = Integer.toString(num);
+        clicked = false;
     }
 
     public static int randInt(int min, int max) {
