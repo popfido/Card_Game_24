@@ -299,6 +299,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if(mode == 1)
         switch (v.getId()) {
             case R.id.btn_add:
                 if(clickAble.operate) {
