@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,7 +19,7 @@ import java.util.Objects;
 import camp7506.assignment1.cardgame24.formularElem;
 
 
-public class PracticeModeActivity extends Activity implements View.OnClickListener{
+public class PracticeModeActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
 
     ImageButton btn_add,btn_minus,btn_multiply,btn_divide,btn_equal,btn_rec,btn_clr,btn_left,btn_right;
     TextView general_io;
@@ -67,6 +68,16 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
         btn_right.setOnClickListener(this);
         btn_equal.setOnClickListener(this);
 
+        btn_add.setOnTouchListener(this);
+        btn_minus.setOnTouchListener(this);
+        btn_multiply.setOnTouchListener(this);
+        btn_divide.setOnTouchListener(this);
+        btn_clr.setOnTouchListener(this);
+        btn_rec.setOnTouchListener(this);
+        btn_left.setOnTouchListener(this);
+        btn_right.setOnTouchListener(this);
+        btn_equal.setOnTouchListener(this);
+
         for(int i=0;i<4;i++)
             card_desk[i].object.setOnClickListener(this);
 
@@ -98,7 +109,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add:
-                if(clickAble.operate) {
+                if(clickAble.operate && mode == 1) {
                     general_io.append("+");
                     formularElem temp = new formularElem("+", 1);
                     formula.add(temp);
@@ -106,7 +117,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_minus:
-                if(clickAble.operate) {
+                if(clickAble.operate && mode == 1) {
                     general_io.append("-");
                     formularElem temp = new formularElem("-",1);
                     formula.add(temp);
@@ -114,7 +125,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_multiply:
-                if(clickAble.operate) {
+                if(clickAble.operate && mode == 1) {
                     general_io.append("*");
                     formularElem temp = new formularElem("*",1);
                     formula.add(temp);
@@ -122,7 +133,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_divide:
-                if(clickAble.operate) {
+                if(clickAble.operate && mode == 1) {
                     general_io.append("/");
                     formularElem temp = new formularElem("/",1);
                     formula.add(temp);
@@ -130,7 +141,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_left:
-                if(clickAble.left) {
+                if(clickAble.left && mode == 1) {
                     general_io.append("(");
                     formularElem temp = new formularElem("(",2);
                     formula.add(temp);
@@ -138,7 +149,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_right:
-                if(clickAble.right && bracketCounter > 0) {
+                if(clickAble.right && bracketCounter > 0 && mode == 1) {
                     general_io.append(")");
                     formularElem temp = new formularElem(")",3);
                     formula.add(temp);
@@ -146,15 +157,17 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.btn_clr:
+                if(mode == 1) {
                     formula.clear();
                     general_io.setText(" ");
                     clickAble = new status();
                     statusArray.clear();
-                    for(int i=0;i<4;i++)
+                    for (int i = 0; i < 4; i++)
                         card_desk[i].clicked = false;
+                }
             break;
             case R.id.btn_rec:
-                if (!formula.isEmpty()){
+                if (!formula.isEmpty() && mode == 1){
                     if(formula.get(formula.size()-1).type == 0){
                         card temp = (card)formula.get(formula.size()-1);
                         temp.clicked = false;
@@ -167,7 +180,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
             break;
             case R.id.btn_equal:
-                if (clickAble.equal && bracketCounter == 0) {
+                if (clickAble.equal && bracketCounter == 0 && mode == 1) {
                     Jep jep = new Jep();
                     try {
                         jep.parse(general_io.getText().toString());
@@ -176,13 +189,14 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                     } catch (JepException e) {
                         System.out.println("An error occurred: " + e.getMessage());
                     }
+                    mode = 2;
                 }
             break;
             default:
                 if (mode == 0)
                     beginGame();
                 else {
-                    if (clickAble.number)
+                    if (clickAble.number && mode == 1)
                         switch (v.getId()) {
                             case R.id.pos1:
                                 if (!card_desk[0].clicked) {
@@ -262,5 +276,66 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
     public void  setOnClick(){
         statusArray.add(clickAble);
         clickAble = new status(false, true, false, true, true);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.btn_add:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton) v).setImageDrawable(getResources().getDrawable(R.drawable.btn_add_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_add));
+                break;
+            case R.id.btn_minus:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_minus_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_minus));
+                break;
+            case R.id.btn_multiply:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_multiply_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_multiply));
+                break;
+            case R.id.btn_divide:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_divide_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_divide));
+                break;
+            case R.id.btn_equal:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_equal_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_equal));
+                break;
+            case R.id.btn_rec:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_rec_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_rec));
+                break;
+            case R.id.btn_clr:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_clr_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_clr));
+                break;
+            case R.id.btn_left:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_left_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_left));
+                break;
+            case R.id.btn_right:
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_right_c));
+                else if(event.getAction() == MotionEvent.ACTION_UP)
+                    ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.btn_right));
+                break;
+        }
+        return false;
     }
 }
