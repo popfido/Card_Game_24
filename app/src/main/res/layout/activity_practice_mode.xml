@@ -16,7 +16,8 @@
         android:src="@drawable/icon_practise"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="3dp" />
+        android:layout_marginBottom="3dp"
+        android:layout_alignParentRight="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -26,18 +27,40 @@
         android:layout_alignParentStart="true"
         android:src="@drawable/mh" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_alignEnd="@+id/imageView"
+        android:src="@drawable/icon_tick"
+        android:layout_alignBottom="@+id/textView"
+        android:visibility="visible" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" "
         android:id="@+id/textView"
-        android:layout_above="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:background="@drawable/output"
         android:textSize="25dp"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:layout_marginBottom="15dp" />
+        android:layout_below="@+id/btn_equal"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Win:"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentRight="false"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_alignStart="@id/imageView2"
+        android:layout_alignParentLeft="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -55,7 +78,7 @@
         android:id="@+id/btn_minus"
         android:layout_below="@+id/btn_add"
         android:layout_alignStart="@+id/btn_add"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/btn_minus"
         android:background="#ffffffff" />
 
@@ -67,7 +90,7 @@
         android:background="#ffffffff"
         android:layout_below="@+id/btn_minus"
         android:layout_alignStart="@+id/btn_minus"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:layout_alignParentStart="false" />
 
     <ImageButton
@@ -76,7 +99,7 @@
         android:id="@+id/btn_divide"
         android:layout_below="@+id/btn_multiply"
         android:layout_alignStart="@+id/btn_multiply"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/btn_divide"
         android:background="#ffffffff" />
 
@@ -88,7 +111,7 @@
         android:layout_alignStart="@+id/btn_divide"
         android:src="@drawable/btn_equal"
         android:background="#ffffffff"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="8dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -139,7 +162,7 @@
         android:background="#ffffffff"
         android:layout_above="@+id/btn_right"
         android:layout_toStartOf="@+id/btn_multiply"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="7dp"
         android:layout_marginRight="6dp" />
 
     <ImageButton
@@ -170,5 +193,12 @@
         android:layout_alignTop="@+id/pos3"
         android:layout_toStartOf="@+id/btn_left"
         android:layout_marginRight="6dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mTextField"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

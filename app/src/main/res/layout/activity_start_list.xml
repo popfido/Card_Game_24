@@ -14,54 +14,89 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_single"
-            android:background="#ffffffff"
-            android:src="@drawable/mode_single"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:onClick="onClick_practise"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="60dp"
-            android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_challenge"
-            android:layout_below="@+id/btn_single"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/mpde_challenge"
-            android:background="#ffffffff"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="60dp"
-            android:layout_weight="1" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_single"
+                android:background="#ffffffff"
+                android:src="@drawable/mode_single"
+                android:onClick="onClick_practise"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_timeLimit"
-            android:background="#ffffffff"
-            android:src="@drawable/mode_time"
-            android:layout_below="@+id/btn_challenge"
-            android:layout_alignStart="@+id/btn_challenge"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="60dp"
-            android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Practise Played:"
+                android:id="@+id/practiseRound"
+                android:layout_below="@+id/btn_single"
+                android:layout_alignEnd="@+id/btn_single"
+                android:layout_marginTop="5dp" />
+        </RelativeLayout>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_tips"
-            android:layout_below="@+id/btn_timeLimit"
-            android:layout_alignStart="@+id/btn_timeLimit"
-            android:src="@drawable/mode_tips"
-            android:background="#ffffffff"
-            android:layout_marginLeft="60dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_challenge"
+                android:src="@drawable/mode_challenge"
+                android:background="#ffffffff"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:onClick="onClick_challenge"
+                android:layout_marginLeft="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Highest Challenge Score:"
+                android:id="@+id/challengeScore"
+                android:layout_below="@+id/btn_challenge"
+                android:layout_alignEnd="@+id/btn_challenge"
+                android:layout_marginTop="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_timeLimit"
+                android:background="#ffffffff"
+                android:src="@drawable/mode_time"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:onClick="onClick_time"
+                android:layout_marginLeft="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Highest Time Limited Score: "
+                android:id="@+id/timeScore"
+                android:layout_below="@+id/btn_timeLimit"
+                android:layout_alignEnd="@+id/btn_timeLimit"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="0dp" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

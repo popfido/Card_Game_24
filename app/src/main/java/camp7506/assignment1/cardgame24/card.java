@@ -16,20 +16,14 @@ public class card extends formularElem{
         object = btn;
     }
 
-    public void reset(){
-        num = randInt(1,52);
-        if(num % 13 != 0)
-            content = Integer.toString(num % 13);
-        else
-            content = Integer.toString(13);
-        src_id = Integer.toString(num);
+    public void resetCards(int n){
+        num = n;
+        content = Integer.toString(num);
         clicked = false;
     }
 
     public static int randInt(int min, int max) {
 
-        // NOTE: Usually this should be a field rather than a method
-        // variable so that it is not re-seeded every call.
         Random rand = new Random();
 
         // nextInt is normally exclusive of the top value,
