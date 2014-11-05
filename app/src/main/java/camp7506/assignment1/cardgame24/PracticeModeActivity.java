@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.singularsys.jep.Jep;
 import com.singularsys.jep.JepException;
 
@@ -30,7 +32,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -50,6 +51,8 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
     ArrayList<status> statusArray = new ArrayList<status>();
     int bracketCounter = 0;
 
+    boolean cheatListener = false;
+    int cheatCounter = 0;
 
     InputStream gameRandomer;
 
@@ -105,6 +108,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
         btn_right.setOnClickListener(this);
         btn_equal.setOnClickListener(this);
         ((ImageView)findViewById(R.id.imageView2)).setOnClickListener(this);
+        ((ImageView)findViewById(R.id.imageView)).setOnClickListener(this);
 
         btn_add.setOnTouchListener(this);
         btn_minus.setOnTouchListener(this);
@@ -168,11 +172,29 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imageView:
+                if(Game_Mode.equals("practise")) {
+                    if (cheatCounter == 4) {
+                        cheatListener = true;
+                        ((TextView)findViewById(R.id.textView11)).setText("Test");
+                    }
+                    else if (mode == 0 && !cheatListener)
+                        cheatCounter++;
+                }
+                break;
             case R.id.imageView2:
-                if(mode == 2 && !gameOver)
-                    reset();
-                else
-                    finish();
+                if(!Game_Mode.equals("practise")) {
+                    if (mode == 2 && !gameOver) {
+                        reset();
+                        beginGame();
+                    }
+                    else
+                        Toast.makeText(this, "You cannot refresh in this mode!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if(mode != 0)
+                        reset();
+                }
                 break;
             case R.id.btn_add:
                 if(clickAble.operate && mode == 1) {
@@ -260,12 +282,14 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                             resImg.setImageResource(getResources().getIdentifier("icon_tick", "drawable", getPackageName()));
                             winCounter++;
                             ((TextView)findViewById(R.id.textView2)).setText("Win: "+Integer.toString(winCounter));
-                            modeJudger(true);
+                            if(!cheatListener)
+                                modeJudger(true);
                         }
                         else {
                             general_io.setText(" " + res);
                             resImg.setImageResource(getResources().getIdentifier("icon_wrong","drawable",getPackageName()));
-                            modeJudger(false);
+                            if(!cheatListener)
+                                modeJudger(false);
                             if(!Game_Mode.equals("practise"))
                                 gameOver = true;
                         }
@@ -273,7 +297,8 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                         System.out.println("An error occurred: " + e.getMessage());
                         general_io.setText("Error: divide 0!");
                         resImg.setImageResource(getResources().getIdentifier("icon_wrong","drawable",getPackageName()));
-                        modeJudger(false);
+                        if(!cheatListener)
+                            modeJudger(false);
                         if(!Game_Mode.equals("practise"))
                             gameOver = true;
                     }
@@ -281,8 +306,12 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
             break;
             default:
-                if (mode == 0)
-                    beginGame();
+                if (mode == 0) {
+                    if(!cheatListener)
+                        beginGame();
+                    else
+                        beginTest();
+                }
                 else {
                     if (clickAble.number && mode == 1)
                         switch (v.getId()) {
@@ -338,7 +367,7 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
             card_desk[i].clicked = false;
             card_desk[i].object.setAlpha((float) 1.0);
         }
-        resImg.setImageResource(getResources().getIdentifier("mh","drawable",getPackageName()));
+        resImg.setImageResource(getResources().getIdentifier("icon_reset","drawable",getPackageName()));
         mode = 0;
     }
 
@@ -369,6 +398,17 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
             gameRandomer.close();
         } catch (IOException e) {
         }
+    }
+
+    public void beginTest(){
+        int[] temp = {4,5,9,10};
+        for(int i = 0;i<4;i++){
+            card_desk[i].src_id = Integer.toString(temp[i] + 13 * card.randInt(0,3));
+            card_desk[i].resetCards(temp[i]);
+            srcId[i] = getResources().getIdentifier("c"+card_desk[i].src_id,"drawable", getPackageName());
+            card_desk[i].object.setImageResource(srcId[i]);
+        }
+        mode = 1;
     }
 
     public void setOnClick(formularElem elem){
@@ -542,6 +582,8 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
                 }
                 break;
         }
+        else
+            Toast.makeText(this, "It is Unclickable now!", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -554,9 +596,9 @@ public class PracticeModeActivity extends Activity implements View.OnClickListen
             openFileOutput.write(("### Config ###"+separator).getBytes());
             openFileOutput.write(("round_practise="+Integer.toString(roundPractise)+separator).getBytes());
             openFileOutput.write(("high_score_challenge="+Integer.toString(highScoreChallenge)+separator).getBytes());
-            openFileOutput.write(("round_challenge=0"+Integer.toString(roundChallenge)+separator).getBytes());
-            openFileOutput.write(("high_score_time=0"+Integer.toString(highScoreTime)+separator).getBytes());
-            openFileOutput.write(("round_time=0"+Integer.toString(roundTime)+separator).getBytes());
+            openFileOutput.write(("round_challenge="+Integer.toString(roundChallenge)+separator).getBytes());
+            openFileOutput.write(("high_score_time="+Integer.toString(highScoreTime)+separator).getBytes());
+            openFileOutput.write(("round_time="+Integer.toString(roundTime)+separator).getBytes());
             openFileOutput.write("### Config ###".getBytes());
             openFileOutput.close();
         } catch (Exception e) {

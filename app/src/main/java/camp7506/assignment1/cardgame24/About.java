@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 
-public class MainScreenActivity extends Activity {
-
-    ImageButton btn_start;
+public class About extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +20,14 @@ public class MainScreenActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_main_screen);
-        btn_start = (ImageButton) findViewById(R.id.btn_start);
+        setContentView(R.layout.activity_about);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_about, menu);
         return true;
     }
 
@@ -41,27 +37,17 @@ public class MainScreenActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClick_start(View view) {
+    public void onClick_back(View view) {
         // Do something in response to button click
-        Intent intent = new Intent(this,startList.class);
-        startActivity(intent);
-    }
-
-    public void onClick_about(View view) {
-        // Do something in response to button click
-        Intent intent = new Intent(this,About.class);
-        startActivity(intent);
-    }
-
-    public void onClick_sum(View view) {
-        // Do something in response to button click
-        Intent intent = new Intent(this,Summary.class);
-        startActivity(intent);
+        finish();
     }
 }
