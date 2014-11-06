@@ -24,7 +24,8 @@
             android:src="@drawable/main_2"
             android:adjustViewBounds="false"
             android:layout_gravity="center"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
             android:src="@drawable/btn_start"
-            android:background="#ffffffff"
+            android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="onClick_start"
             android:layout_gravity="center"
@@ -45,7 +46,7 @@
             android:id="@+id/btn_summary"
             android:layout_below="@+id/btn_start"
             android:layout_centerHorizontal="true"
-            android:background="#ffffffff"
+            android:background="@android:color/transparent"
             android:src="@drawable/btn_summary"
             android:clickable="true"
             android:layout_gravity="center"
@@ -59,7 +60,7 @@
             android:layout_below="@+id/btn_summary"
             android:layout_centerHorizontal="true"
             android:src="@drawable/btn_about"
-            android:background="#ffffffff"
+            android:background="@android:color/transparent"
             android:clickable="true"
             android:layout_gravity="center"
             android:layout_weight="1"

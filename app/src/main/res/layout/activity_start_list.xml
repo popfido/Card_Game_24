@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_single"
-                android:background="#ffffffff"
+                android:background="@android:color/transparent"
                 android:src="@drawable/mode_single"
                 android:onClick="onClick_practise"
                 android:layout_gravity="center_vertical"
@@ -37,7 +37,7 @@
                 android:text="Practise Played:"
                 android:id="@+id/practiseRound"
                 android:layout_below="@+id/btn_single"
-                android:layout_alignEnd="@+id/btn_single"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp" />
         </RelativeLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_challenge"
                 android:src="@drawable/mode_challenge"
-                android:background="#ffffffff"
+                android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_centerVertical="true"
@@ -64,7 +64,7 @@
                 android:text="Highest Challenge Score:"
                 android:id="@+id/challengeScore"
                 android:layout_below="@+id/btn_challenge"
-                android:layout_alignEnd="@+id/btn_challenge"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp" />
         </RelativeLayout>
 
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_timeLimit"
-                android:background="#ffffffff"
+                android:background="@android:color/transparent"
                 android:src="@drawable/mode_time"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
@@ -91,9 +91,8 @@
                 android:text="Highest Time Limited Score: "
                 android:id="@+id/timeScore"
                 android:layout_below="@+id/btn_timeLimit"
-                android:layout_alignEnd="@+id/btn_timeLimit"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="0dp" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp" />
 
         </RelativeLayout>
 
